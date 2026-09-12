@@ -1027,7 +1027,7 @@ export function App() {
           <CoffeeTipModal
             isOpen={isCoffeeOpen}
             onClose={() => setIsCoffeeOpen(false)}
-            bmcUsername="nikhil"
+            razorpayUrl="https://rzp.io/rzp/mDXzulzR"
           />
         )}
       </Suspense>

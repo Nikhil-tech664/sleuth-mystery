@@ -202,16 +202,16 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
               }}
               className="text-[#C69214] underline hover:text-amber-400 font-semibold cursor-pointer"
             >
-              Buy the precinct coffee ☕
+              Tip the precinct ☕ (UPI / Cards)
             </button>
           ) : (
             <a
-              href="https://buymeacoffee.com"
+              href="https://rzp.io/rzp/mDXzulzR"
               target="_blank"
               rel="noreferrer"
               className="text-[#C69214] underline hover:text-amber-400 font-semibold"
             >
-              Buy the precinct coffee ☕
+              Tip the precinct ☕ (UPI / Cards)
             </a>
           )}
         </div>
