@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --font-typewriter: 'Courier Prime', Courier, monospace;
+  --font-stamp: 'Special Elite', cursive, monospace;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  --color-parchment: #F6F1E5;
+  --color-parchment-dark: #E5DBBE;
+  --color-dossier: #D9C8A5;
+  --color-noir-950: #0A0908;
+  --color-noir-900: #121110;
+  --color-noir-850: #191716;
+  --color-noir-800: #211E1C;
+  --color-noir-700: #322E2A;
+  --color-noir-600: #4B4640;
+  --color-ink: #1C1917;
+  --color-evidence-gold: #C69214;
+  --color-crime-red: #B91C1C;
+  --color-stamp-red: #DC2626;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #121110;
+  color: #E6E1DA;
+  overflow-x: hidden;
+}
+
+.font-typewriter {
+  font-family: var(--font-typewriter);
+}
+
+.font-stamp {
+  font-family: var(--font-stamp);
+}
+
+/* Aged paper styling */
+.parchment-paper {
+  background-color: #F6F1E5;
+  color: #1F1D1A;
+  background-image: radial-gradient(#E8DECA 1px, transparent 1px);
+  background-size: 16px 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+.dark-dossier {
+  background: linear-gradient(145deg, #1C1A18, #141312);
+  border: 1px solid #332F2A;
+}
+
+/* Vintage stamp rotation effect */
+.stamp-classified {
+  border: 3px dashed #DC2626;
+  color: #DC2626;
+  font-family: var(--font-stamp);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: inline-block;
+  transform: rotate(-7deg);
+}
+
+.stamp-solved {
+  border: 3px solid #16A34A;
+  color: #16A34A;
+  font-family: var(--font-stamp);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: inline-block;
+  transform: rotate(-5deg);
+}
+
+/* Custom slick scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #141312;
+}
+::-webkit-scrollbar-thumb {
+  background: #38332E;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #504942;
+}
