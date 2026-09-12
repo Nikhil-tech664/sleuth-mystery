@@ -73,6 +73,9 @@ const Interactive3DSceneModal = lazy(() =>
 const DuelModal = lazy(() =>
   import('./components/DuelModal').then((m) => ({ default: m.DuelModal }))
 );
+const CoffeeTipModal = lazy(() =>
+  import('./components/CoffeeTipModal').then((m) => ({ default: m.CoffeeTipModal }))
+);
 const DispatchSubscriberModal = lazy(() =>
   import('./components/DispatchSubscriberModal').then((m) => ({
     default: m.DispatchSubscriberModal,
@@ -131,6 +134,7 @@ export function App() {
   const [isCaseCreatorOpen, setIsCaseCreatorOpen] = useState<boolean>(false);
   const [isCoopRoomOpen, setIsCoopRoomOpen] = useState<boolean>(false);
   const [is3DSceneOpen, setIs3DSceneOpen] = useState<boolean>(false);
+  const [isCoffeeOpen, setIsCoffeeOpen] = useState<boolean>(false);
   const [interrogatingSuspect, setInterrogatingSuspect] = useState<Suspect | null>(null);
 
   // Undo / Redo History Stacks
@@ -507,6 +511,7 @@ export function App() {
         onOpenCaseCreator={() => setIsCaseCreatorOpen(true)}
         onOpenCoopRoom={() => setIsCoopRoomOpen(true)}
         onOpen3DScene={() => setIs3DSceneOpen(true)}
+        onOpenCoffee={() => setIsCoffeeOpen(true)}
         onCompleteAll={handleCompleteAll}
         isSolved={deductionState.isSolved}
       />
@@ -901,6 +906,7 @@ export function App() {
         totalWins={userStats.gamesWon}
         streak={userStats.currentStreak}
         onOpenVault={() => setIsVaultOpen(true)}
+        onOpenCoffee={() => setIsCoffeeOpen(true)}
       />
 
       <VaultModal
@@ -1014,6 +1020,14 @@ export function App() {
             onClose={() => setIs3DSceneOpen(false)}
             caseTitle={currentCase.title}
             onDiscoverClue={handleLogAlibi}
+          />
+        )}
+
+        {isCoffeeOpen && (
+          <CoffeeTipModal
+            isOpen={isCoffeeOpen}
+            onClose={() => setIsCoffeeOpen(false)}
+            bmcUsername="nikhil"
           />
         )}
       </Suspense>

@@ -22,6 +22,7 @@ import {
   Edit3,
   Users,
   Flashlight,
+  Coffee,
 } from 'lucide-react';
 import { sound, type AtmosphereMode, type SongTrack } from '../audio/soundEffects';
 import { setMutedPreference } from '../utils/storage';
@@ -47,6 +48,7 @@ interface HeaderProps {
   onOpenCaseCreator?: () => void;
   onOpenCoopRoom?: () => void;
   onOpen3DScene?: () => void;
+  onOpenCoffee?: () => void;
   onCompleteAll?: () => void;
   isSolved: boolean;
 }
@@ -69,6 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCaseCreator,
   onOpenCoopRoom,
   onOpen3DScene,
+  onOpenCoffee,
   onCompleteAll,
   isSolved,
 }) => {
@@ -217,6 +220,22 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Lightbulb className="w-4 h-4" />
           </button>
+
+          {/* Buy Me a Coffee / Tip Jar Button */}
+          {onOpenCoffee && (
+            <button
+              type="button"
+              onClick={() => {
+                sound.playTypewriter();
+                onOpenCoffee();
+              }}
+              title="Buy the Detective a Coffee (Precinct Tip Jar)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-mono text-xs font-bold border border-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition-all"
+            >
+              <Coffee className="w-3.5 h-3.5 fill-current text-stone-950" />
+              <span className="hidden sm:inline">Tip Coffee</span>
+            </button>
+          )}
 
           {/* Sound FX Toggle & Test */}
           <div className="flex items-center gap-1.5">

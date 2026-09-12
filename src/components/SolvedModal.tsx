@@ -14,6 +14,7 @@ interface SolvedModalProps {
   totalWins: number;
   streak: number;
   onOpenVault: () => void;
+  onOpenCoffee?: () => void;
 }
 
 export const SolvedModal: React.FC<SolvedModalProps> = ({
@@ -24,6 +25,7 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
   totalWins,
   streak,
   onOpenVault,
+  onOpenCoffee,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -189,16 +191,29 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
 
         {/* Buy Me a Coffee / Tip Jar (Monetization link) */}
         <div className="mt-4 pt-3 border-t border-[#25221E] flex items-center justify-center gap-2 text-xs text-[#8C8478]">
-          <Coffee className="w-3.5 h-3.5 text-amber-500" />
+          <Coffee className="w-3.5 h-3.5 text-amber-500 animate-bounce" />
           <span>Enjoying the mystery?</span>
-          <a
-            href="https://buymeacoffee.com"
-            target="_blank"
-            rel="noreferrer"
-            className="text-[#C69214] underline hover:text-amber-400 font-semibold"
-          >
-            Buy the precinct coffee
-          </a>
+          {onOpenCoffee ? (
+            <button
+              type="button"
+              onClick={() => {
+                sound.playTypewriter();
+                onOpenCoffee();
+              }}
+              className="text-[#C69214] underline hover:text-amber-400 font-semibold cursor-pointer"
+            >
+              Buy the precinct coffee ☕
+            </button>
+          ) : (
+            <a
+              href="https://buymeacoffee.com"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[#C69214] underline hover:text-amber-400 font-semibold"
+            >
+              Buy the precinct coffee ☕
+            </a>
+          )}
         </div>
       </div>
     </div>
