@@ -85,3 +85,204 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #504942;
 }
+
+/* ==========================================================================
+   VICTORIAN DETECTIVE DESK ATMOSPHERE & TACTILE PROPS
+   ========================================================================== */
+
+/* Authentic Aged Woodgrain Desk Surface */
+.desk-woodgrain {
+  background-color: #0E0C0A;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(200, 146, 20, 0.15), transparent 75%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(24, 21, 18, 0.8) 0px,
+      rgba(17, 15, 13, 0.8) 40px,
+      rgba(27, 23, 20, 0.8) 80px,
+      rgba(15, 13, 11, 0.8) 120px
+    ),
+    radial-gradient(circle at center, #1B1713 0%, #0A0908 100%);
+  background-attachment: fixed;
+}
+
+/* Dark Green / Cognac Stitched Leather Desk Blotter */
+.leather-blotter {
+  background: radial-gradient(circle at 50% 15%, #1F281E 0%, #151A15 65%, #0F130F 100%);
+  border: 1px solid #2D3A2C;
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.85),
+    0 15px 35px -5px rgba(0, 0, 0, 0.7),
+    0 5px 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+/* Gold/Cream Stitched Edge around Leather Blotter */
+.leather-blotter::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1.5px dashed rgba(198, 146, 20, 0.35);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* Antique Brass Corner Protector */
+.brass-corner-tl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 40%, #5E4306 100%);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  pointer-events: none;
+  z-index: 10;
+}
+.brass-corner-tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(225deg, #D4AF37 0%, #AA7C11 40%, #5E4306 100%);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  box-shadow: -1px 1px 3px rgba(0,0,0,0.6);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Dynamic Banker's Lamp Light Glows */
+.lamp-glow-warm {
+  position: relative;
+}
+.lamp-glow-warm::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  height: 380px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(251, 191, 36, 0.14) 0%, rgba(245, 158, 11, 0.05) 50%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lamp-glow-cool {
+  position: relative;
+}
+.lamp-glow-cool::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  height: 380px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(147, 197, 253, 0.06) 0%, transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Manila Case Dossier Folder */
+.manila-dossier {
+  background-color: #211D18;
+  background-image: 
+    radial-gradient(#2A251F 1px, transparent 1px),
+    linear-gradient(180deg, #26211B 0%, #1D1915 100%);
+  background-size: 20px 20px, 100% 100%;
+  border: 1px solid #453B2F;
+  box-shadow: 
+    0 12px 28px -4px rgba(0, 0, 0, 0.65),
+    0 4px 10px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Vintage Clue Index Card */
+.vintage-index-card {
+  background: linear-gradient(175deg, #25211D 0%, #1C1916 100%);
+  border: 1px solid #3E362C;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+.vintage-index-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #C69214, #8C6207);
+  opacity: 0.75;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Classic Yellow Legal Pad for Detective Notes */
+.legal-pad {
+  background-color: #FAF4D3;
+  color: #26211B;
+  background-image: 
+    repeating-linear-gradient(
+      transparent,
+      transparent 23px,
+      #D9D0A8 24px
+    );
+  line-height: 24px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+.legal-pad::before {
+  /* Red left margin line of legal pad */
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 42px;
+  width: 1.5px;
+  background-color: rgba(220, 38, 38, 0.5);
+  pointer-events: none;
+}
+.legal-pad-header {
+  background: #26211B;
+  color: #FAF4D3;
+  border-bottom: 3px solid #78350F;
+}
+
+/* Coffee Cup Watermark Ring */
+.coffee-ring {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid rgba(138, 90, 43, 0.16);
+  box-shadow: 
+    inset 0 0 6px rgba(138, 90, 43, 0.12),
+    0 0 4px rgba(138, 90, 43, 0.1);
+  pointer-events: none;
+  filter: blur(0.5px);
+  transform: rotate(-12deg);
+}
+
+/* Brass Paperclip Prop */
+.paperclip-clip {
+  position: absolute;
+  top: -12px;
+  right: 28px;
+  width: 14px;
+  height: 38px;
+  border: 2.5px solid #D4AF37;
+  border-radius: 12px;
+  border-bottom: none;
+  background: transparent;
+  box-shadow: 
+    1.5px 1.5px 3px rgba(0, 0, 0, 0.6),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 15;
+  transform: rotate(6deg);
+}

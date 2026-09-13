@@ -19,17 +19,20 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
   const [activeTab, setActiveTab] = useState<'suspects' | 'weapons' | 'locations'>('suspects');
 
   return (
-    <div className="rounded-xl border border-[#3A352F] bg-[#1A1816] p-5 shadow-lg">
+    <div className="rounded-xl manila-dossier p-5 shadow-xl relative overflow-hidden">
+      {/* Brass Eyelet Grommet */}
+      <div className="absolute top-3 right-4 w-3 h-3 rounded-full bg-[#D4AF37]/40 border border-[#8C6207] shadow-inner pointer-events-none" />
+
       {/* Category Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#2C2824] pb-3 mb-4">
+      <div className="flex items-center gap-2 border-b border-[#3E352B] pb-3 mb-4">
         <button
           onClick={() => {
             sound.playTypewriter();
             setActiveTab('suspects');
           }}
-          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
             activeTab === 'suspects'
-              ? 'bg-[#C69214] text-[#121110] shadow-md'
+              ? 'bg-[#C69214] text-[#121110] shadow-md scale-105'
               : 'bg-[#221F1C] text-[#A89E92] hover:text-[#FAF7F2]'
           }`}
         >
@@ -42,9 +45,9 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
             sound.playTypewriter();
             setActiveTab('weapons');
           }}
-          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
             activeTab === 'weapons'
-              ? 'bg-[#C69214] text-[#121110] shadow-md'
+              ? 'bg-[#C69214] text-[#121110] shadow-md scale-105'
               : 'bg-[#221F1C] text-[#A89E92] hover:text-[#FAF7F2]'
           }`}
         >
@@ -57,9 +60,9 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
             sound.playTypewriter();
             setActiveTab('locations');
           }}
-          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all flex items-center gap-1.5 ${
             activeTab === 'locations'
-              ? 'bg-[#C69214] text-[#121110] shadow-md'
+              ? 'bg-[#C69214] text-[#121110] shadow-md scale-105'
               : 'bg-[#221F1C] text-[#A89E92] hover:text-[#FAF7F2]'
           }`}
         >
@@ -74,35 +77,42 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
           {suspects.map((suspect) => (
             <div
               key={suspect.id}
-              className="group bg-[#211E1B] border border-[#332E28] hover:border-[#C69214]/60 rounded-xl p-4 transition-all duration-200 hover:-translate-y-0.5 shadow-md flex flex-col justify-between"
+              className="group vintage-index-card rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-[#C69214]/60 shadow-lg flex flex-col justify-between relative"
             >
+              {/* Paperclip clipping suspect photo card */}
+              <div className="paperclip-clip -top-3 left-4" />
+
               <div>
                 {/* Polaroid Mugshot Header */}
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="relative w-14 h-14 rounded-lg bg-[#141311] border-2 border-[#C69214]/40 overflow-hidden flex items-center justify-center text-3xl shadow-inner group-hover:scale-105 group-hover:border-[#C69214] transition-all shrink-0">
-                    {suspect.portraitUrl ? (
-                      <>
-                        <img
-                          src={suspect.portraitUrl}
-                          alt={suspect.name}
-                          className="w-full h-full object-cover object-top"
-                        />
-                        <span className="absolute bottom-0.5 right-0.5 text-[10px] bg-black/80 px-1 py-0.2 rounded border border-white/10 leading-none">
+                  <div className="relative w-16 h-16 rounded bg-[#FAF6F0] p-1 border border-[#3E352B] shadow-inner group-hover:scale-105 transition-all shrink-0">
+                    <div className="w-full h-full rounded overflow-hidden bg-[#121110] relative">
+                      {suspect.portraitUrl ? (
+                        <>
+                          <img
+                            src={suspect.portraitUrl}
+                            alt={suspect.name}
+                            className="w-full h-full object-cover object-top filter contrast-110"
+                          />
+                          <span className="absolute bottom-0.5 right-0.5 text-[9px] bg-black/80 px-1 py-0.2 rounded text-amber-200 border border-white/10 leading-none">
+                            {suspect.avatarEmoji}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="flex items-center justify-center h-full text-3xl">
                           {suspect.avatarEmoji}
                         </span>
-                      </>
-                    ) : (
-                      suspect.avatarEmoji
-                    )}
+                      )}
+                    </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold text-[#F5EFEB] font-serif truncate">
+                    <div className="text-sm font-bold text-[#FAF6F0] font-serif truncate">
                       {suspect.name}
                     </div>
                     <div className="text-[11px] font-mono text-[#C69214] truncate font-semibold">
                       "{suspect.alias}"
                     </div>
-                    <div className="text-[11px] text-[#8C8478] truncate">
+                    <div className="text-[11px] text-[#A89E92] truncate font-sans">
                       {suspect.role}
                     </div>
                   </div>
@@ -110,7 +120,7 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
 
                 {/* Motive & Bio */}
                 <div className="space-y-2 text-xs">
-                  <div className="bg-[#171513] rounded p-2 border border-[#2B2723]">
+                  <div className="bg-[#181513] rounded p-2 border border-[#2F2922]">
                     <span className="font-mono text-[#E5B54F] font-bold block mb-0.5 text-[10px] uppercase">
                       Suspicious Motive:
                     </span>
@@ -130,10 +140,10 @@ export const SuspectDossier: React.FC<SuspectDossierProps> = ({
                       sound.playTypewriter();
                       onInterrogateSuspect(suspect);
                     }}
-                    className="w-full mt-2 py-1.5 px-3 rounded-lg bg-[#292215] border border-[#C69214]/40 hover:bg-[#382D1B] hover:border-[#C69214] text-amber-300 font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-all active:scale-95"
+                    className="w-full mt-2 py-1.5 px-3 rounded-lg bg-[#292215] border border-[#C69214]/50 hover:bg-[#382D1B] hover:border-[#C69214] text-amber-300 font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
-                    <span>Cross-Examine</span>
+                    <span>Cross-Examine Under Polygraph</span>
                   </button>
                 </div>
               </div>

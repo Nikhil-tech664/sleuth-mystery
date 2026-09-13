@@ -491,7 +491,7 @@ export function App() {
   const completedCaseIds = Object.keys(userStats.history);
 
   return (
-    <div className="min-h-screen bg-[#121110] text-[#E6E1DA] flex flex-col selection:bg-[#c29b38] selection:text-[#121110] pb-16 md:pb-0">
+    <div className="min-h-screen desk-woodgrain text-[#E6E1DA] flex flex-col selection:bg-[#c29b38] selection:text-[#121110] pb-16 md:pb-0">
       {/* Top Navigation */}
       <Header
         caseNumber={currentCase.caseNumber}
@@ -653,7 +653,7 @@ export function App() {
       <main className="flex-1 w-full pb-8">
         {/* VIEW 1: ACTIVE INVESTIGATION DESK */}
         {currentView === 'desk' && (
-          <div className="max-w-6xl w-full mx-auto px-4 py-6 space-y-6">
+          <div className={`max-w-6xl w-full mx-auto px-2 sm:px-4 py-6 space-y-6 transition-all duration-700 ${isLampOn ? 'lamp-glow-warm' : 'lamp-glow-cool'}`}>
             {/* Noir Desk Atmosphere Gadgets (Banker's Lamp, Rotary Phone, Pocket Watch) */}
             <DeskAtmosphereGadgets
               isLampOn={isLampOn}
@@ -662,7 +662,13 @@ export function App() {
               onOpenJukebox={() => setIsJukeboxOpen(true)}
             />
 
-            {/* Quick Corkboard Red Yarn Jump Banner */}
+            {/* Stitched Leather Desk Blotter Mat */}
+            <div className="leather-blotter rounded-2xl p-3 sm:p-6 space-y-6 shadow-2xl relative">
+              {/* Antique Brass Corner Protectors */}
+              <div className="brass-corner-tl rounded-tl-2xl" />
+              <div className="brass-corner-tr rounded-tr-2xl" />
+
+              {/* Quick Corkboard Red Yarn Jump Banner */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-gradient-to-r from-red-950/40 via-[#1C1713] to-amber-950/40 border border-red-900/40 p-3.5 rounded-2xl shadow-md">
               <div className="flex items-center gap-2.5 text-xs font-serif text-amber-200">
                 <Activity className="w-4 h-4 text-red-500 animate-pulse shrink-0" />
@@ -758,6 +764,7 @@ export function App() {
               >
                 {deductionState.isSolved ? 'Review Verdict' : 'Accuse Culprit'}
               </button>
+            </div>
             </div>
           </div>
         )}

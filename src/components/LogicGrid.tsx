@@ -184,9 +184,12 @@ export const LogicGrid: React.FC<LogicGridProps> = ({
   };
 
   return (
-    <div className="rounded-xl border border-[#3A352F] bg-[#171513] p-5 shadow-xl">
+    <div className="rounded-xl manila-dossier p-5 shadow-2xl relative overflow-hidden">
+      {/* Brass Eyelet Grommet */}
+      <div className="absolute top-3 right-4 w-3 h-3 rounded-full bg-[#D4AF37]/40 border border-[#8C6207] shadow-inner pointer-events-none" />
+
       {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#2A2621] pb-4 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#3E352B] pb-4 mb-4">
         <div>
           <div className="flex items-center gap-2">
             <Grid className="w-4 h-4 text-[#C69214]" />
