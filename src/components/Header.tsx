@@ -24,12 +24,12 @@ import {
   Flashlight,
   Coffee,
   Newspaper,
+  ChevronDown,
 } from 'lucide-react';
 import { sound, type AtmosphereMode, type SongTrack } from '../audio/soundEffects';
 import { setMutedPreference } from '../utils/storage';
 import type { DetectiveRank } from '../types/game';
 import { CountdownTimer } from './CountdownTimer';
-import { InstallPwaButton } from './InstallPwaButton';
 
 interface HeaderProps {
   caseNumber: number;
@@ -83,6 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [currentTrack, setCurrentTrack] = useState<SongTrack | null>(sound.getCurrentTrack());
   const [ambientVolume, setAmbientVolume] = useState<number>(sound.getAmbientVolume());
   const [isAtmosphereMenuOpen, setIsAtmosphereMenuOpen] = useState<boolean>(false);
+  const [isSpecialMenuOpen, setIsSpecialMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const unsubscribe = sound.subscribe((state) => {
@@ -559,142 +560,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
 
-          {/* 5-Chapter Story Campaign */}
-          {onOpenCampaign && (
-            <button
-              type="button"
-              onClick={() => {
-                sound.playTypewriter();
-                onOpenCampaign();
-              }}
-              title="The London Blackout: 5-Chapter Story Campaign"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#271E10] hover:bg-[#382B14] border border-amber-500/60 text-amber-300 text-xs font-mono font-bold transition-all shadow-sm active:scale-95"
-            >
-              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden md:inline">Campaign</span>
-            </button>
-          )}
-
-          {/* Case Creator Studio */}
-          {onOpenCaseCreator && (
-            <button
-              type="button"
-              onClick={() => {
-                sound.playTypewriter();
-                onOpenCaseCreator();
-              }}
-              title="Detective Case Studio: Build & Share Cases"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#201810] hover:bg-[#2F2316] border border-amber-600/50 text-amber-300 text-xs font-mono font-bold transition-all shadow-sm active:scale-95"
-            >
-              <Edit3 className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden md:inline">Case Studio</span>
-            </button>
-          )}
-
-          {/* Detective Co-Op Room */}
-          {onOpenCoopRoom && (
-            <button
-              type="button"
-              onClick={() => {
-                sound.playTypewriter();
-                onOpenCoopRoom();
-              }}
-              title="Detective Co-Op: Shared Room Code Investigation"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#181D26] hover:bg-[#202836] border border-blue-500/50 text-blue-300 text-xs font-mono font-bold transition-all shadow-sm active:scale-95"
-            >
-              <Users className="w-3.5 h-3.5 text-blue-400" />
-              <span className="hidden md:inline">Co-Op</span>
-            </button>
-          )}
-
-          {/* 3D Crime Scene Flashlight Investigator */}
-          {onOpen3DScene && (
-            <button
-              type="button"
-              onClick={() => {
-                sound.playTypewriter();
-                onOpen3DScene();
-              }}
-              title="Canvas 3D Flashlight & UV Crime Scene Investigator"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#22172C] hover:bg-[#322042] border border-purple-500/50 text-purple-300 text-xs font-mono font-bold transition-all shadow-sm active:scale-95"
-            >
-              <Flashlight className="w-3.5 h-3.5 text-purple-400" />
-              <span className="hidden md:inline">3D Scene</span>
-            </button>
-          )}
-
-          {/* Victorian Front-Page Newspaper */}
-          {onOpenNewspaper && (
-            <button
-              type="button"
-              onClick={() => {
-                sound.playTypewriter();
-                onOpenNewspaper();
-              }}
-              title="Read & Download Victorian Daily Chronicle Newspaper (.PNG)"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2D2418] hover:bg-[#3D3020] border border-amber-500/60 text-amber-200 text-xs font-serif font-bold transition-all shadow-sm active:scale-95"
-            >
-              <Newspaper className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden md:inline">The Chronicle</span>
-            </button>
-          )}
-
-          {/* Evidence Locker / Trophy Room */}
-          <button
-            type="button"
-            onClick={() => {
-              sound.playTypewriter();
-              onOpenTrophyRoom();
-            }}
-            title="Precinct Evidence Locker: Solved Trophies"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#271E10] border border-amber-500/50 hover:bg-[#382B14] hover:border-amber-400 text-amber-300 text-xs font-mono font-bold transition-all shadow-inner"
-          >
-            <Trophy className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Evidence Locker</span>
-          </button>
-
-          {/* 1v1 Detective Duel */}
-          <button
-            onClick={() => {
-              sound.playTypewriter();
-              onOpenDuel();
-            }}
-            title="1v1 Detective Duel: Challenge a Friend"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2B1715] border border-red-500/40 hover:bg-[#3D1D1A] hover:border-red-500 text-red-300 text-xs font-mono font-bold transition-colors"
-          >
-            <Swords className="w-3.5 h-3.5 text-red-400" />
-            <span>1v1 Duel</span>
-          </button>
-
-          {/* Daily Morning Dispatch Subscriber */}
-          <button
-            onClick={() => {
-              sound.playTypewriter();
-              onOpenSubscriber();
-            }}
-            title="Subscribe to Daily Morning Dispatches"
-            className="p-2 rounded-lg bg-[#221F1C] border border-[#3A352F] hover:bg-[#2C2824] text-amber-400 hover:text-amber-300 transition-colors"
-          >
-            <Mail className="w-4 h-4" />
-          </button>
-
-          {/* Install PWA App Button */}
-          <InstallPwaButton />
-
-          {/* Printable Detective Kit */}
-          <button
-            onClick={() => {
-              sound.playTypewriter();
-              onOpenPrintable();
-            }}
-            title="Printable Detective File / Book Exporter"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#221F1C] border border-[#3A352F] hover:border-[#C69214]/50 hover:bg-[#2C2824] text-[#D8CFBF] text-xs font-mono transition-colors"
-          >
-            <Printer className="w-3.5 h-3.5 text-[#C69214]" />
-            <span>Print Kit</span>
-          </button>
-
-          {/* Cold Case Vault (Pro/Monetization) */}
+          {/* Cold Case Vault Button */}
           <button
             onClick={() => {
               sound.playTypewriter();
@@ -705,6 +571,183 @@ export const Header: React.FC<HeaderProps> = ({
             <Archive className="w-3.5 h-3.5" />
             <span>Cold Vault</span>
           </button>
+
+          {/* SPECIAL ASSIGNMENTS & MODES DROPDOWN MENU */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setIsSpecialMenuOpen(!isSpecialMenuOpen)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition-all shadow-sm ${
+                isSpecialMenuOpen
+                  ? 'bg-amber-600 text-black border-amber-400 shadow-md'
+                  : 'bg-[#221F1C] border-[#3A352F] text-amber-300 hover:bg-[#2C2824]'
+              }`}
+              title="Special Modes: Newspaper, Evidence Locker, Campaign, Co-Op, 3D Scene, Case Studio"
+            >
+              <span>Special Files</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  isSpecialMenuOpen ? 'rotate-180 text-black' : 'text-amber-400'
+                }`}
+              />
+            </button>
+
+            {/* Popover Menu */}
+            {isSpecialMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-[#1C1814] border-2 border-amber-600/60 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 text-stone-200 space-y-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#A89E92] px-2.5 py-1 border-b border-[#302820]">
+                  Precinct Specialty Files
+                </div>
+
+                {onOpenNewspaper && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpenNewspaper();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-serif text-amber-200 text-left transition-colors"
+                  >
+                    <Newspaper className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div>
+                      <div className="font-bold">The Daily Chronicle</div>
+                      <div className="text-[9px] text-stone-400 font-sans">Front-page newspaper (.PNG)</div>
+                    </div>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => {
+                    sound.playTypewriter();
+                    setIsSpecialMenuOpen(false);
+                    onOpenTrophyRoom();
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-amber-300 text-left transition-colors"
+                >
+                  <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+                  <div>
+                    <div className="font-bold">Evidence Locker</div>
+                    <div className="text-[9px] text-stone-400 font-sans">View solved crime trophies</div>
+                  </div>
+                </button>
+
+                {onOpenCampaign && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpenCampaign();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-amber-300 text-left transition-colors"
+                  >
+                    <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div>
+                      <div className="font-bold">London Blackout Campaign</div>
+                      <div className="text-[9px] text-stone-400 font-sans">5-chapter story mystery</div>
+                    </div>
+                  </button>
+                )}
+
+                {onOpenCoopRoom && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpenCoopRoom();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-blue-300 text-left transition-colors"
+                  >
+                    <Users className="w-4 h-4 text-blue-400 shrink-0" />
+                    <div>
+                      <div className="font-bold">Detective Co-Op Room</div>
+                      <div className="text-[9px] text-stone-400 font-sans">Solve mystery with a partner</div>
+                    </div>
+                  </button>
+                )}
+
+                {onOpen3DScene && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpen3DScene();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-purple-300 text-left transition-colors"
+                  >
+                    <Flashlight className="w-4 h-4 text-purple-400 shrink-0" />
+                    <div>
+                      <div className="font-bold">3D Crime Scene Canvas</div>
+                      <div className="text-[9px] text-stone-400 font-sans">Flashlight & UV inspection</div>
+                    </div>
+                  </button>
+                )}
+
+                {onOpenCaseCreator && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpenCaseCreator();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-stone-300 text-left transition-colors"
+                  >
+                    <Edit3 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <div>
+                      <div className="font-bold">Case Studio</div>
+                      <div className="text-[9px] text-stone-400 font-sans">Build & share custom cases</div>
+                    </div>
+                  </button>
+                )}
+
+                {onOpenPrintable && (
+                  <button
+                    onClick={() => {
+                      sound.playTypewriter();
+                      setIsSpecialMenuOpen(false);
+                      onOpenPrintable();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-stone-300 text-left transition-colors"
+                  >
+                    <Printer className="w-4 h-4 text-[#C69214] shrink-0" />
+                    <div>
+                      <div className="font-bold">Printable Case File</div>
+                      <div className="text-[9px] text-stone-400 font-sans">Tabletop pen & paper PDF</div>
+                    </div>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => {
+                    sound.playTypewriter();
+                    setIsSpecialMenuOpen(false);
+                    onOpenDuel();
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-red-300 text-left transition-colors"
+                >
+                  <Swords className="w-4 h-4 text-red-400 shrink-0" />
+                  <div>
+                    <div className="font-bold">1v1 Detective Duel</div>
+                    <div className="text-[9px] text-stone-400 font-sans">Challenge a friend</div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => {
+                    sound.playTypewriter();
+                    setIsSpecialMenuOpen(false);
+                    onOpenSubscriber();
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-[#2A231C] text-xs font-mono text-amber-300 text-left transition-colors border-t border-[#302820] pt-1.5"
+                >
+                  <Mail className="w-4 h-4 text-amber-400 shrink-0" />
+                  <div>
+                    <div className="font-bold">Morning Dispatch</div>
+                    <div className="text-[9px] text-stone-400 font-sans">Daily case delivery</div>
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Stats Button */}
           <button

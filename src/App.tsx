@@ -31,6 +31,7 @@ import { DeskAtmosphereGadgets } from './components/DeskAtmosphereGadgets';
 import { ConfessionModal } from './components/ConfessionModal';
 import { JukeboxModal } from './components/JukeboxModal';
 import { NewspaperModal } from './components/NewspaperModal';
+import { DetectiveQuickStart } from './components/DetectiveQuickStart';
 
 // Performance optimization: Lazy-load heavy views & secondary modals
 const PrintableCaseModal = lazy(() =>
@@ -671,22 +672,8 @@ export function App() {
               <div className="brass-corner-tl rounded-tl-2xl" />
               <div className="brass-corner-tr rounded-tr-2xl" />
 
-              {/* Quick Corkboard Red Yarn Jump Banner */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-gradient-to-r from-red-950/40 via-[#1C1713] to-amber-950/40 border border-red-900/40 p-3.5 rounded-2xl shadow-md">
-              <div className="flex items-center gap-2.5 text-xs font-serif text-amber-200">
-                <Activity className="w-4 h-4 text-red-500 animate-pulse shrink-0" />
-                <span>Prefer tactile pushpins & red yarn cords? Open the physical conspiracy board.</span>
-              </div>
-              <button
-                onClick={() => {
-                  sound.playTypewriter();
-                  setCurrentView('corkboard');
-                }}
-                className="w-full sm:w-auto px-3.5 py-1.5 bg-red-900/70 hover:bg-red-800 text-red-100 border border-red-600/80 rounded-xl text-xs font-mono font-bold transition-all hover:scale-105 shadow"
-              >
-                Open Red Yarn Board ➔
-              </button>
-            </div>
+              {/* 30-Second Detective Quick-Start Ribbon */}
+              <DetectiveQuickStart onOpenTutorial={() => setIsTutorialOpen(true)} />
 
             {/* Case Incident Briefing & Accuse Trigger */}
             <CaseBriefing
