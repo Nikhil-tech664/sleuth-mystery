@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sound, type AtmosphereMode, type SongTrack } from '../audio/soundEffects';
-import { Phone, Flame, Sparkles, Clock, Volume2, X, Disc3, SkipForward } from 'lucide-react';
+import { Phone, Flame, Sparkles, Clock, Volume2, X, Disc3, SkipForward, Coffee, Search } from 'lucide-react';
 
 interface DeskAtmosphereGadgetsProps {
   isLampOn: boolean;
@@ -18,6 +18,11 @@ export const DeskAtmosphereGadgets: React.FC<DeskAtmosphereGadgetsProps> = ({
   // Atmosphere state subscription
   const [atmosphere, setAtmosphere] = useState<AtmosphereMode>(sound.getAtmosphere());
   const [currentTrack, setCurrentTrack] = useState<SongTrack | null>(sound.getCurrentTrack());
+
+  // Coffee & Pipe & Loupe interactive states
+  const [coffeeTip, setCoffeeTip] = useState<string | null>(null);
+  const [isPipeSmoking, setIsPipeSmoking] = useState<boolean>(false);
+  const [isLoupeActive, setIsLoupeActive] = useState<boolean>(false);
 
   useEffect(() => {
     return sound.subscribe((st) => {
@@ -98,6 +103,37 @@ export const DeskAtmosphereGadgets: React.FC<DeskAtmosphereGadgetsProps> = ({
     sound.playCassetteClick();
     setDialedNumber('');
     setPhoneMessage(null);
+  };
+
+  const COFFEE_TIPS = [
+    "Inspector Vance: 'Strong black coffee—the only true antidote to London\\'s foggy deceptions.'",
+    "Forensic Tip: 'Check the toxicology reagents before trusting a suspect\\'s dinner alibi.'",
+    "Precinct Advice: 'Eliminating impossible combinations reveals the guilty in plain sight.'",
+    "Coroner\\'s Note: 'A warm sip clears the mind. Check the victim\\'s timeline once more.'",
+    "Detective Intuition: 'Look for the contradiction—two suspects cannot hold the same key.'",
+  ];
+
+  const handleSipCoffee = () => {
+    sound.unlock();
+    sound.playCoffeeSip();
+    const randomTip = COFFEE_TIPS[Math.floor(Math.random() * COFFEE_TIPS.length)];
+    setCoffeeTip(randomTip);
+    setTimeout(() => {
+      setCoffeeTip((current) => (current === randomTip ? null : current));
+    }, 6000);
+  };
+
+  const handlePuffPipe = () => {
+    sound.unlock();
+    sound.playPipePuff();
+    setIsPipeSmoking(true);
+    setTimeout(() => setIsPipeSmoking(false), 3500);
+  };
+
+  const handleToggleLoupe = () => {
+    sound.unlock();
+    sound.playCassetteClick();
+    setIsLoupeActive((prev) => !prev);
   };
 
   // Pocket watch time formatting
@@ -345,7 +381,55 @@ export const DeskAtmosphereGadgets: React.FC<DeskAtmosphereGadgetsProps> = ({
             )}
           </div>
 
-          {/* GADGET 5: AUDIO SOUND TEST BELL */}
+          {/* GADGET 5: STEAMING PORCELAIN COFFEE CUP */}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleSipCoffee}
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#201D19] hover:bg-[#2C2722] border border-[#3A342B] hover:border-amber-600/50 text-amber-300 rounded-xl text-xs font-mono font-bold transition-all hover:scale-105 active:scale-95 shadow-sm group relative"
+              title="Take a sip of hot precinct coffee for an investigator tip"
+            >
+              <div className="relative">
+                <Coffee className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform" />
+                <span className="absolute -top-1.5 -right-1 text-[9px] animate-bounce opacity-70">♨</span>
+              </div>
+              <span className="hidden sm:inline">Sip Coffee ☕</span>
+            </button>
+          </div>
+
+          {/* GADGET 6: SHERLOCK'S MEERSCHAUM SMOKING PIPE */}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handlePuffPipe}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all shadow-sm ${
+                isPipeSmoking
+                  ? 'bg-amber-950/80 border border-orange-500/80 text-orange-300 shadow-[0_0_12px_rgba(249,115,22,0.4)]'
+                  : 'bg-[#201D19] hover:bg-[#2C2722] border border-[#3A342B] hover:border-amber-600/50 text-[#C4BCB0]'
+              }`}
+              title="Light Sherlock's meerschaum pipe for a wisp of atmospheric smoke"
+            >
+              <span className={`text-sm ${isPipeSmoking ? 'animate-pulse' : ''}`}>🚬</span>
+              <span className="hidden sm:inline">Puff Pipe</span>
+              {isPipeSmoking && <span className="text-[10px] animate-ping">💨</span>}
+            </button>
+          </div>
+
+          {/* GADGET 7: BRASS MAGNIFYING LOUPE */}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleToggleLoupe}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all shadow-sm ${
+                isLoupeActive
+                  ? 'bg-amber-600 text-black border border-amber-400 font-black shadow-[0_0_15px_rgba(245,158,11,0.5)]'
+                  : 'bg-[#201D19] hover:bg-[#2C2722] border border-[#3A342B] hover:border-amber-600/50 text-stone-300'
+              }`}
+              title="Toggle Brass Magnifying Loupe across the desk"
+            >
+              <Search className="w-3.5 h-3.5" />
+              <span>{isLoupeActive ? 'Loupe ON' : 'Loupe'}</span>
+            </button>
+          </div>
+
+          {/* GADGET 8: AUDIO SOUND TEST BELL */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => {
@@ -453,7 +537,57 @@ export const DeskAtmosphereGadgets: React.FC<DeskAtmosphereGadgetsProps> = ({
             </button>
           </div>
         )}
+
+        {/* COFFEE TIP ADVICE BANNER */}
+        {coffeeTip && (
+          <div className="mt-3 pt-3 border-t border-[#302B24] bg-amber-950/40 border border-amber-600/40 rounded-xl p-3 flex items-start justify-between gap-3 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-start gap-2.5">
+              <div className="w-7 h-7 rounded-full bg-amber-600/30 border border-amber-500/50 flex items-center justify-center shrink-0 mt-0.5">
+                <Coffee className="w-4 h-4 text-amber-400" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider">
+                    Sip of Precinct Coffee ☕
+                  </span>
+                </div>
+                <p className="text-xs text-amber-100 font-serif italic mt-0.5 leading-relaxed">
+                  &quot;{coffeeTip}&quot;
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setCoffeeTip(null)}
+              className="text-stone-400 hover:text-white p-1 rounded hover:bg-stone-800"
+              title="Dismiss note"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* OPTICAL BRASS LOUPE FLOATING HUD */}
+      {isLoupeActive && (
+        <div className="fixed bottom-6 right-6 z-40 bg-[#1C1713]/95 border-2 border-amber-500/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md max-w-xs animate-in slide-in-from-bottom-5">
+          <div className="flex items-center justify-between border-b border-amber-800/40 pb-2 mb-2">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-300">
+              <Search className="w-4 h-4 text-amber-400" />
+              <span>Optical Loupe Active (1.8x)</span>
+            </div>
+            <button
+              onClick={() => setIsLoupeActive(false)}
+              className="text-stone-400 hover:text-white p-0.5 rounded hover:bg-stone-800"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <p className="text-[11px] text-stone-300 font-sans leading-relaxed">
+            Your magnifying lens is sharpened. Hover over suspect dossiers, crime scene hotspots, and fingerprint whorls on your desk.
+          </p>
+        </div>
+      )}
     </>
   );
 };

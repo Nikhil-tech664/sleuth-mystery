@@ -122,7 +122,7 @@ export const ConfessionModal: React.FC<ConfessionModalProps> = ({
       return;
     }
 
-    sound.playHeartbeat();
+    sound.playGavelSlam();
 
     // Stage 1: EKG heart rate spiking under pressure
     const spikeInterval = setInterval(() => {
@@ -137,13 +137,13 @@ export const ConfessionModal: React.FC<ConfessionModalProps> = ({
     }, 400);
 
     const timer1 = setTimeout(() => {
-      sound.playDeskSlam();
+      sound.playHandcuffs();
       setStage('breakdown');
     }, 2000);
 
     const timer2 = setTimeout(() => {
+      sound.playIronCellDoor();
       setStage('confession');
-      sound.playTypewriter();
     }, 3800);
 
     const timer3 = setTimeout(() => {
@@ -221,10 +221,22 @@ export const ConfessionModal: React.FC<ConfessionModalProps> = ({
                 ) : (
                   suspect.avatarEmoji
                 )}
+
+                {/* Sliding Iron Prison Bars */}
                 {stage !== 'ekg_spike' && (
-                  <div className="absolute bottom-1 right-1 bg-red-600 text-white text-[10px] font-mono px-2 py-0.5 rounded-full font-bold shadow-md">
-                    BROKEN
-                  </div>
+                  <>
+                    <div className="absolute inset-0 flex justify-around pointer-events-none animate-in slide-in-from-top-4 duration-500 z-10">
+                      {[...Array(4)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="w-1.5 h-full bg-gradient-to-r from-stone-950 via-stone-700 to-stone-950 shadow-lg"
+                        />
+                      ))}
+                    </div>
+                    <div className="absolute bottom-1 right-1 bg-red-600 text-white text-[10px] font-mono px-2 py-0.5 rounded-full font-bold shadow-md z-20">
+                      HANDCUFFED
+                    </div>
+                  </>
                 )}
               </div>
             </div>

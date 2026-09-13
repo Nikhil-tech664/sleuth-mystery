@@ -23,6 +23,7 @@ import {
   Users,
   Flashlight,
   Coffee,
+  Newspaper,
 } from 'lucide-react';
 import { sound, type AtmosphereMode, type SongTrack } from '../audio/soundEffects';
 import { setMutedPreference } from '../utils/storage';
@@ -49,6 +50,7 @@ interface HeaderProps {
   onOpenCoopRoom?: () => void;
   onOpen3DScene?: () => void;
   onOpenCoffee?: () => void;
+  onOpenNewspaper?: () => void;
   onCompleteAll?: () => void;
   isSolved: boolean;
 }
@@ -72,6 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCoopRoom,
   onOpen3DScene,
   onOpenCoffee,
+  onOpenNewspaper,
   onCompleteAll,
   isSolved,
 }) => {
@@ -617,6 +620,22 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Flashlight className="w-3.5 h-3.5 text-purple-400" />
               <span className="hidden md:inline">3D Scene</span>
+            </button>
+          )}
+
+          {/* Victorian Front-Page Newspaper */}
+          {onOpenNewspaper && (
+            <button
+              type="button"
+              onClick={() => {
+                sound.playTypewriter();
+                onOpenNewspaper();
+              }}
+              title="Read & Download Victorian Daily Chronicle Newspaper (.PNG)"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#2D2418] hover:bg-[#3D3020] border border-amber-500/60 text-amber-200 text-xs font-serif font-bold transition-all shadow-sm active:scale-95"
+            >
+              <Newspaper className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden md:inline">The Chronicle</span>
             </button>
           )}
 

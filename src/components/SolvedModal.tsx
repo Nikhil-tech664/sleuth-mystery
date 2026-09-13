@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import type { Case, DeductionState } from '../types/game';
-import { X, Share2, Check, Trophy, Clock, AlertCircle, Coffee, ArrowRight } from 'lucide-react';
+import { X, Share2, Check, Trophy, Clock, AlertCircle, Coffee, ArrowRight, Newspaper } from 'lucide-react';
 import { sound } from '../audio/soundEffects';
 import { generateShareText, generateShareEmojiGrid, copyShareTextToClipboard } from '../utils/share';
 import { getRankForCaseCount } from '../data/ranks';
 import { DetectiveBadgeCanvas } from './DetectiveBadgeCanvas';
+import { NewspaperModal } from './NewspaperModal';
 
 interface SolvedModalProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
   onOpenCoffee,
 }) => {
   const [copied, setCopied] = useState(false);
+  const [isNewspaperOpen, setIsNewspaperOpen] = useState(false);
 
   if (!isOpen) return null;
 
@@ -165,8 +167,20 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
           </div>
         </div>
 
-        {/* Share Button (Wordle Flywheel) */}
-        <div className="space-y-2">
+        {/* Share & Newspaper Buttons */}
+        <div className="space-y-2.5">
+          {/* Victorian Front-Page Newspaper Feature */}
+          <button
+            onClick={() => {
+              sound.playTypewriter();
+              setIsNewspaperOpen(true);
+            }}
+            className="w-full py-3 rounded-xl bg-[#2D261F] hover:bg-[#3D3328] border-2 border-amber-600/60 text-amber-200 font-serif font-bold text-xs uppercase tracking-wider shadow-xl flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] transition-all"
+          >
+            <Newspaper className="w-4 h-4 text-amber-400" />
+            <span>Read & Download Daily Chronicle Newspaper (.PNG)</span>
+          </button>
+
           <button
             onClick={handleShare}
             className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-black font-mono font-bold uppercase tracking-wider text-sm shadow-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all"
@@ -216,6 +230,16 @@ export const SolvedModal: React.FC<SolvedModalProps> = ({
           )}
         </div>
       </div>
+
+      {/* Victorian Front-Page Newspaper Modal */}
+      <NewspaperModal
+        isOpen={isNewspaperOpen}
+        onClose={() => setIsNewspaperOpen(false)}
+        currentCase={currentCase}
+        state={state}
+        rank={rank.title}
+        totalWins={totalWins}
+      />
     </div>
   );
 };

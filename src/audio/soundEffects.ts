@@ -3071,6 +3071,216 @@ class SoundEffects {
     });
   }
 
+  // Resonant Victorian Magistrate Wooden Gavel Double Strike (BANG! BANG!)
+  public playGavelSlam() {
+    this.runWithContext((ctx, out) => {
+      const strike = (startTime: number) => {
+        // High-frequency wooden crack
+        const crack = ctx.createOscillator();
+        const crackGain = ctx.createGain();
+        crack.type = 'triangle';
+        crack.frequency.setValueAtTime(680, startTime);
+        crack.frequency.exponentialRampToValueAtTime(120, startTime + 0.04);
+        crackGain.gain.setValueAtTime(0.85, startTime);
+        crackGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.05);
+        crack.connect(crackGain);
+        crackGain.connect(out);
+        crack.start(startTime);
+        crack.stop(startTime + 0.06);
+
+        // Heavy low soundboard thud & body
+        const thud = ctx.createOscillator();
+        const thudGain = ctx.createGain();
+        thud.type = 'sine';
+        thud.frequency.setValueAtTime(160, startTime);
+        thud.frequency.exponentialRampToValueAtTime(42, startTime + 0.35);
+        thudGain.gain.setValueAtTime(0.9, startTime);
+        thudGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+        thud.connect(thudGain);
+        thudGain.connect(out);
+        thud.start(startTime);
+        thud.stop(startTime + 0.42);
+
+        // Wood room echo noise
+        const bLen = Math.floor(ctx.sampleRate * 0.18);
+        const bBuf = ctx.createBuffer(1, bLen, ctx.sampleRate);
+        const bData = bBuf.getChannelData(0);
+        for (let i = 0; i < bLen; i++) bData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bLen * 0.25));
+        const noise = ctx.createBufferSource();
+        noise.buffer = bBuf;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, startTime);
+        const nGain = ctx.createGain();
+        nGain.gain.setValueAtTime(0.45, startTime);
+        noise.connect(filter);
+        filter.connect(nGain);
+        nGain.connect(out);
+        noise.start(startTime);
+      };
+
+      const t0 = ctx.currentTime + 0.005;
+      strike(t0);
+      strike(t0 + 0.22); // Second authoritative gavel slam
+    });
+  }
+
+  // Metallic Ratcheting Click of Iron Handcuffs
+  public playHandcuffs() {
+    this.runWithContext((ctx, out) => {
+      const t = ctx.currentTime + 0.005;
+      // 3 rapid ratcheting clicks
+      [0, 0.04, 0.08].forEach((offset, idx) => {
+        const click = ctx.createOscillator();
+        const gain = ctx.createGain();
+        click.type = 'triangle';
+        click.frequency.setValueAtTime(2600 + idx * 300, t + offset);
+        click.frequency.exponentialRampToValueAtTime(800, t + offset + 0.02);
+        gain.gain.setValueAtTime(0.45, t + offset);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.025);
+        click.connect(gain);
+        gain.connect(out);
+        click.start(t + offset);
+        click.stop(t + offset + 0.03);
+      });
+
+      // Heavy metal shackle lock impact
+      const snap = ctx.createOscillator();
+      const sGain = ctx.createGain();
+      snap.type = 'square';
+      snap.frequency.setValueAtTime(1400, t + 0.12);
+      snap.frequency.exponentialRampToValueAtTime(300, t + 0.22);
+      sGain.gain.setValueAtTime(0.5, t + 0.12);
+      sGain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      snap.connect(sGain);
+      sGain.connect(out);
+      snap.start(t + 0.12);
+      snap.stop(t + 0.26);
+    });
+  }
+
+  // Heavy Iron Dungeon Cell Door Sliding & Slamming Shut
+  public playIronCellDoor() {
+    this.runWithContext((ctx, out) => {
+      const t = ctx.currentTime + 0.005;
+      // Metal sliding friction scraping
+      const sLen = Math.floor(ctx.sampleRate * 0.35);
+      const sBuf = ctx.createBuffer(1, sLen, ctx.sampleRate);
+      const sData = sBuf.getChannelData(0);
+      for (let i = 0; i < sLen; i++) sData[i] = (Math.random() * 2 - 1) * 0.4;
+      const scrape = ctx.createBufferSource();
+      scrape.buffer = sBuf;
+      const sFilter = ctx.createBiquadFilter();
+      sFilter.type = 'bandpass';
+      sFilter.frequency.setValueAtTime(1600, t);
+      sFilter.frequency.linearRampToValueAtTime(900, t + 0.35);
+      const scGain = ctx.createGain();
+      scGain.gain.setValueAtTime(0.35, t);
+      scGain.gain.linearRampToValueAtTime(0.01, t + 0.35);
+      scrape.connect(sFilter);
+      sFilter.connect(scGain);
+      scGain.connect(out);
+      scrape.start(t);
+
+      // Heavy cell door iron clang at t + 0.35
+      const clangT = t + 0.32;
+      const clang = ctx.createOscillator();
+      const cFilter = ctx.createBiquadFilter();
+      const cGain = ctx.createGain();
+      clang.type = 'sawtooth';
+      clang.frequency.setValueAtTime(240, clangT);
+      clang.frequency.exponentialRampToValueAtTime(55, clangT + 0.9);
+      cFilter.type = 'lowpass';
+      cFilter.frequency.setValueAtTime(3400, clangT);
+      cFilter.frequency.exponentialRampToValueAtTime(450, clangT + 0.9);
+      cGain.gain.setValueAtTime(0.9, clangT);
+      cGain.gain.exponentialRampToValueAtTime(0.001, clangT + 1.1);
+
+      clang.connect(cFilter);
+      cFilter.connect(cGain);
+      cGain.connect(out);
+      clang.start(clangT);
+      clang.stop(clangT + 1.15);
+    });
+  }
+
+  // Detective Coffee Sip & Mug Clink
+  public playCoffeeSip() {
+    this.runWithContext((ctx, out) => {
+      const t = ctx.currentTime + 0.005;
+      // Gentle liquid inhalation noise
+      const len = Math.floor(ctx.sampleRate * 0.28);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.sin((i / len) * Math.PI);
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1400, t);
+      filter.frequency.linearRampToValueAtTime(750, t + 0.28);
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.3, t);
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(out);
+      noise.start(t);
+
+      // Ceramic saucer clink at t + 0.35
+      const clinkT = t + 0.35;
+      const clink = ctx.createOscillator();
+      const clinkGain = ctx.createGain();
+      clink.type = 'sine';
+      clink.frequency.setValueAtTime(2850, clinkT);
+      clinkGain.gain.setValueAtTime(0.25, clinkT);
+      clinkGain.gain.exponentialRampToValueAtTime(0.001, clinkT + 0.15);
+      clink.connect(clinkGain);
+      clinkGain.connect(out);
+      clink.start(clinkT);
+      clink.stop(clinkT + 0.18);
+    });
+  }
+
+  // Meerschaum Pipe Match Strike & Tobacco Puff
+  public playPipePuff() {
+    this.runWithContext((ctx, out) => {
+      const t = ctx.currentTime + 0.005;
+      // Friction match strike
+      const len = Math.floor(ctx.sampleRate * 0.12);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+      const match = ctx.createBufferSource();
+      match.buffer = buf;
+      const mFilter = ctx.createBiquadFilter();
+      mFilter.type = 'highpass';
+      mFilter.frequency.value = 2400;
+      const mGain = ctx.createGain();
+      mGain.gain.value = 0.4;
+      match.connect(mFilter);
+      mFilter.connect(mGain);
+      mGain.connect(out);
+      match.start(t);
+
+      // Soft ember puff exhalation
+      const puffLen = Math.floor(ctx.sampleRate * 0.45);
+      const puffBuf = ctx.createBuffer(1, puffLen, ctx.sampleRate);
+      const pData = puffBuf.getChannelData(0);
+      for (let i = 0; i < puffLen; i++) pData[i] = (Math.random() * 2 - 1) * Math.sin((i / puffLen) * Math.PI);
+      const puff = ctx.createBufferSource();
+      puff.buffer = puffBuf;
+      const pFilter = ctx.createBiquadFilter();
+      pFilter.type = 'lowpass';
+      pFilter.frequency.setValueAtTime(450, t + 0.15);
+      const pGain = ctx.createGain();
+      pGain.gain.setValueAtTime(0.28, t + 0.15);
+      puff.connect(pFilter);
+      pFilter.connect(pGain);
+      pGain.connect(out);
+      puff.start(t + 0.15);
+    });
+  }
+
   public getAtmosphere(): AtmosphereMode {
     return this.currentAtmosphere;
   }

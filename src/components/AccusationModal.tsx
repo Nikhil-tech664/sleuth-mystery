@@ -44,13 +44,14 @@ export const AccusationModal: React.FC<AccusationModalProps> = ({
 
     sound.playStamp();
     const result = onAccuse(selectedSuspect, selectedWeapon, selectedLocation);
-
     if (result.correct) {
+      sound.playGavelSlam();
       setFeedback({ type: 'success', text: result.message });
       setTimeout(() => {
         onClose();
       }, 900);
     } else {
+      sound.playError();
       setFeedback({ type: 'error', text: result.message });
     }
   };

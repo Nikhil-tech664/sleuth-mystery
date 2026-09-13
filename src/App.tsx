@@ -30,6 +30,7 @@ import { MobileDock } from './components/MobileDock';
 import { DeskAtmosphereGadgets } from './components/DeskAtmosphereGadgets';
 import { ConfessionModal } from './components/ConfessionModal';
 import { JukeboxModal } from './components/JukeboxModal';
+import { NewspaperModal } from './components/NewspaperModal';
 
 // Performance optimization: Lazy-load heavy views & secondary modals
 const PrintableCaseModal = lazy(() =>
@@ -135,6 +136,7 @@ export function App() {
   const [isCoopRoomOpen, setIsCoopRoomOpen] = useState<boolean>(false);
   const [is3DSceneOpen, setIs3DSceneOpen] = useState<boolean>(false);
   const [isCoffeeOpen, setIsCoffeeOpen] = useState<boolean>(false);
+  const [isNewspaperOpen, setIsNewspaperOpen] = useState<boolean>(false);
   const [interrogatingSuspect, setInterrogatingSuspect] = useState<Suspect | null>(null);
 
   // Undo / Redo History Stacks
@@ -512,6 +514,7 @@ export function App() {
         onOpenCoopRoom={() => setIsCoopRoomOpen(true)}
         onOpen3DScene={() => setIs3DSceneOpen(true)}
         onOpenCoffee={() => setIsCoffeeOpen(true)}
+        onOpenNewspaper={() => setIsNewspaperOpen(true)}
         onCompleteAll={handleCompleteAll}
         isSolved={deductionState.isSolved}
       />
@@ -959,6 +962,16 @@ export function App() {
       <JukeboxModal
         isOpen={isJukeboxOpen}
         onClose={() => setIsJukeboxOpen(false)}
+      />
+
+      {/* Victorian Front-Page Newspaper Clipping Modal */}
+      <NewspaperModal
+        isOpen={isNewspaperOpen}
+        onClose={() => setIsNewspaperOpen(false)}
+        currentCase={currentCase}
+        state={deductionState}
+        rank={currentRank.title}
+        totalWins={userStats.gamesWon}
       />
 
       {/* Performance Optimized: Lazy-Loaded Secondary Modals */}
